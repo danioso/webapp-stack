@@ -1,0 +1,33 @@
+{
+  "name": "webapp-stack",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build",
+    "serve": "gulp watch"
+  },
+  "keywords": [
+    "Webapp",
+    "reactjs",
+    "jade",
+    "stylus",
+    "coffee-script"
+  ],
+  "authors": [
+    "Daniel Osorio <danosot@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "app/bower",
+    "dist"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "lodash": "~2.4.1",
+    "react": "~0.8.0",
+    "x-editable": "~1.5.1",
+    "bootstrap": "~3.1.0"
+  }
+}

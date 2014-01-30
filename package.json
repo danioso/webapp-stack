@@ -1,0 +1,41 @@
+{
+	"name": "webapp-stack",
+	"version": "0.0.1",
+	"description": "Modern webapp development stack",
+	"main": "gulpfile.coffee",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "gulp build",
+		"serve": "gulp watch"
+	},
+	"keywords": [
+		"Webapp",
+		"reactjs",
+		"jade",
+		"stylus",
+		"coffee-script"
+	],
+	"author": "Daniel Osorio <danosot@gmail.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"gulp-stylus": "0.0.10",
+		"gulp-watch": "~0.5.0",
+		"gulp": "~3.4.0",
+		"coffee-script": "~1.6.3",
+		"gulp-coffee": "~1.2.5",
+		"gulp-jade": "~0.3.0",
+		"tiny-lr": "0.0.5",
+		"bower": "~1.2.8",
+		"gulp-react": "~0.1.1",
+		"gulp-rename": "~0.2.2",
+		"gulp-header": "~1.0.2",
+		"gulp-livereload": "~0.2.0",
+		"gulp-browserify": "~0.4.0",
+		"ecstatic": "~0.4.13",
+		"http": "0.0.0",
+		"gulp-embedlr": "~0.5.2"
+	},
+	"engines": {
+		"node": ">= 0.11.9"
+	}
+}
