@@ -1,24 +1,25 @@
 "use strict"
 
 # Gulp
-gulp	 	= require 'gulp'
-watch	 	= require 'gulp-watch'
+gulp	 		= require 'gulp'
+util 			= require 'gulp-util'
+watch	 		= require 'gulp-watch'
 rename 		= require 'gulp-rename'
 header 		= require 'gulp-header'
 
 # Preprocessors
-coffee	 	= require 'gulp-coffee'
-react 		= require 'gulp-react'
-browserify 	= require 'gulp-browserify'
-stylus	 	= require 'gulp-stylus'
-jade	 	= require 'gulp-jade'
+coffee	 	 = require 'gulp-coffee'
+react 		 = require 'gulp-react'
+browserify = require 'gulp-browserify'
+stylus	 	 = require 'gulp-stylus'
+jade	 	   = require 'gulp-jade'
 
 # Server, livereload
-ecstatic 	= require('ecstatic')
-http 		= require('http')
-embedlr 	= require("gulp-embedlr")
-livereload 	= require('gulp-livereload')
-server 		= require('tiny-lr')()
+ecstatic 	 = require('ecstatic')
+http 		   = require('http')
+embedlr 	 = require("gulp-embedlr")
+livereload = require('gulp-livereload')
+server 		 = require('tiny-lr')()
 
 ###
 # Styles
@@ -35,9 +36,9 @@ gulp.task 'styles', ->
 # Scripts
 ###
 gulp.task 'scripts', ->
-	gulp.run 'coffee', ->
-		gulp.run 'jsx', ->
-			gulp.run 'browserfy', ->
+	gulp.start 'coffee', ->
+		gulp.start 'jsx', ->
+			gulp.start 'browserfy', ->
 
 gulp.task 'coffee', ->
 
@@ -56,13 +57,13 @@ gulp.task 'jsx', ->
 	gulp.src( '.tmp/jsx/**/*.jsx' )
 		.pipe(react())
 		.pipe(gulp.dest( '.tmp/scripts/' ))
-	
+
 gulp.task 'browserfy', ->
 
 	gulp.src( '.tmp/scripts/main.js' )
 		.pipe(browserify({
 			insertGlobals: true
-			debug: !gulp.env.production
+			debug: !util.env.production
         }))
 		.pipe(gulp.dest( 'dist/scripts/' ))
 		.pipe(livereload(server))
@@ -85,15 +86,15 @@ gulp.task 'templates', ->
 ###
 gulp.task 'default', ->
 
-	gulp.run 'styles', 'templates', 'scripts'
+	gulp.start 'styles', 'templates', 'scripts'
 
 
 ###
-# Static server, livereload and watch changes 
+# Static server, livereload and watch changes
 ###
 gulp.task "watch", ->
 
-	gulp.run 'default'
+	gulp.start 'default'
 
 	# Create static server
 	http.createServer(
@@ -107,14 +108,14 @@ gulp.task "watch", ->
 
 		# Watch .styl files
 		gulp.watch "app/styles/**/*.styl", (e)->
-			gulp.run 'styles'
+			gulp.start 'styles'
 
 		# Watch .coffee files
-		gulp.watch "app/scripts/**/*.coffee", (e)-> 
-			gulp.run 'scripts'
+		gulp.watch "app/scripts/**/*.coffee", (e)->
+			gulp.start 'scripts'
 
 		# Watch .jade files
-		gulp.watch ["app/*.jade","app/templates/**/*.jade"], (e)-> 
-			gulp.run 'templates'
+		gulp.watch ["app/*.jade","app/templates/**/*.jade"], (e)->
+			gulp.start 'templates'
 
 
