@@ -36,38 +36,30 @@ gulp.task 'styles', ->
 # Scripts
 ###
 gulp.task 'scripts', ->
-	gulp.start 'coffee', ->
-		gulp.start 'jsx', ->
-			gulp.start 'browserfy', ->
+	gulp.start('browserfy')
 
 gulp.task 'coffee', ->
+	gulp.src(['app/scripts/**/*.coffee','!app/scripts/bower/*'])
+			.pipe(coffee( bare: true ))
+			.pipe(header('/** <%= tag %> */\n\n', { tag: '@jsx React.DOM'} )) # Add React JXS header tag
+			.pipe(rename((dir, base, ext) ->
+				return base + '.jsx';
+			))
+			.pipe(gulp.dest( '.tmp/jsx/' ))
 
-	gulp.src( ['app/scripts/**/*.coffee','!app/scripts/bower/*'] )
-		.pipe(coffee(
-			bare: true
-		))
-		.pipe(header('/** <%= tag %> */\n\n', { tag : '@jsx React.DOM'} )) # Add React JXS header tag
-		.pipe(rename( (dir, base, ext)->
-			return base + '.jsx';
-		))
-		.pipe(gulp.dest( '.tmp/jsx/' ))
+gulp.task 'jsx', ['coffee'], ->
+	gulp.src('.tmp/jsx/**/*.jsx')
+			.pipe(react())
+			.pipe(gulp.dest('.tmp/scripts/'))
 
-gulp.task 'jsx', ->
-
-	gulp.src( '.tmp/jsx/**/*.jsx' )
-		.pipe(react())
-		.pipe(gulp.dest( '.tmp/scripts/' ))
-
-gulp.task 'browserfy', ->
-
-	gulp.src( '.tmp/scripts/main.js' )
-		.pipe(browserify({
-			insertGlobals: true
-			debug: !util.env.production
-        }))
-		.pipe(gulp.dest( 'dist/scripts/' ))
-		.pipe(livereload(server))
-
+gulp.task 'browserfy', ['jsx'], ->
+	gulp.src('.tmp/scripts/main.js')
+			.pipe(browserify(
+				insertGlobals: true
+				debug: !util.env.production
+      ))
+			.pipe(gulp.dest('dist/scripts/'))
+			.pipe(livereload(server))
 
 ###
 # Templates HTML
