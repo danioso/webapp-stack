@@ -1,6 +1,6 @@
 {
   "name": "webapp-stack",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Modern webapp development stack",
   "main": "gulpfile.coffee",
   "scripts": {
